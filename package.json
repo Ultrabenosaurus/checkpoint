@@ -1,0 +1,45 @@
+{
+  "name": "checkpoint",
+  "title": "checkpoint.js",
+  "description": "Like a scrollbar, but with context. Along the lines of how Chrome marks occurences of search results when you do Find in Page, but giving an outline of page contents.",
+  "version": "0.1.0",
+  "main": "dist/checkpoint.min.js",
+  "homepage": "https://github.com/Ultrabenosaurus/checkpoint",
+  "license": "BSD-3-Clause",
+  "licenses": [
+    {
+      "type": "BSD-3-Clause"
+    }
+  ],
+  "author": {
+    "name": "Dan Bennett",
+    "url": "https://github.com/Ultrabenosaurus"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ultrabenosaurus/checkpoint.git"
+  },
+  "keywords": [
+    "checkpoint",
+    "minimap",
+    "javascript",
+    "web",
+    "front-end"
+  ],
+  "bugs": {
+    "url": "https://github.com/Ultrabenosaurus/checkpoint/issues"
+  },
+  "devDependencies": {
+    "glob": "~4.0.2",
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-qunit": "~0.5.2",
+    "grunt-contrib-concat": "~0.4.0",
+    "grunt-contrib-uglify": "~0.5.0"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "private": true
+}
