@@ -227,6 +227,9 @@ function chMain( chConf ) {
 	this.calculator;
 	this.painter;
 	this.scroller;
+
+	this.init();
+	this.bindings();
 };
 
 chMain.prototype.init = function() {
@@ -278,4 +281,3 @@ chMain.prototype.updateScroller = function() {
 };
 
 var checkpoint = new chMain( chConf );
-checkpoint.init();

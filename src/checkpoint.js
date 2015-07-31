@@ -6,4 +6,3 @@
 */
 
 var checkpoint = new chMain( chConf );
-checkpoint.init();
