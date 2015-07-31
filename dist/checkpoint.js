@@ -11,7 +11,8 @@ var chConf = {
 		h4: "#0774b7",
 		h5: "#055586",
 		h6: "#033655"
-	}
+	},
+	scrollerColour: "#000"
 };
 
 function chSizer( conf ) {
@@ -44,6 +45,15 @@ chSizer.prototype.findPageHeight = function() {
 	return h;
 };
 
+chSizer.prototype.hasResized = function() {
+	if( checkpoint.config.browserHeight != this.findBrowserHeight() || checkpoint.config.pageHeight != this.findPageHeight() ) {
+		checkpoint.config.browserHeight = this.findBrowserHeight();
+		checkpoint.config.pageHeight = this.findPageHeight();
+		return true;
+	}
+	return false;
+};
+
 function chFinder( conf ) {
 	this.config = conf;
 };
@@ -72,57 +82,6 @@ chFinder.prototype.findAllOffsets = function() {
 	};
 
 	return offs;
-};
-
-function chPainter( conf ) {
-	this.config = conf;
-	this.b = ( ( typeof document.body != 'undefined' ) ? document.body : document.getElementsByTagName('body')[0] );
-	this.c;
-};
-
-chPainter.prototype.paintContainer = function() {
-	c = document.createElement( "div" );
-
-	c.style.position = "fixed";
-	c.style.top = 0;
-	c.style.right = 0;
-	c.style.width = this.config.markerWidth + "px";
-	c.style.height = this.config.browserHeight + "px";
-
-	this.b.appendChild( c );
-	this.c = c;
-	return c;
-};
-
-chPainter.prototype.paintMarker = function( offset, colour ) {
-	m = document.createElement( "div" );
-
-	m.style.position = "absolute";
-	m.style.backgroundColor = colour;
-	m.style.right = 0;
-	m.style.top = offset + "px";
-	m.style.width = this.config.markerWidth + "px";
-	m.style.height = this.config.markerHeight + "px";
-
-	this.c.appendChild( m );
-	return m;
-};
-
-chPainter.prototype.paintHeader = function( pattern ) {
-	headers =  this.config.headers;
-	markers =  this.config.markers;
-	for(var i = markers[pattern].length - 1; i >= 0; i--) {
-		this.paintMarker( markers[pattern][i], headers[pattern] );
-	};
-};
-
-chPainter.prototype.paintAllHeaders = function() {
-	headers =  this.config.headers;
-	for( pattern in headers ) {
-		if( headers.hasOwnProperty( pattern ) ) {
-			this.paintHeader( pattern );
-		}
-	};
 };
 
 function chCalculator( conf ) {
@@ -154,16 +113,120 @@ chCalculator.prototype.calcAllMarkerPos = function() {
 	return marks;
 };
 
+chCalculator.prototype.calcScrollerHeight = function() {
+	return Math.ceil( this.config.modifier * this.config.browserHeight );
+};
+
+chCalculator.prototype.calcScrollerPos = function( pos ) {
+	return Math.ceil( this.config.modifier * pos );
+};
+
+function chPainter( conf ) {
+	this.config = conf;
+	this.b = ( ( typeof document.body != 'undefined' ) ? document.body : document.getElementsByTagName('body')[0] );
+	this.c;
+};
+
+chPainter.prototype.paintContainer = function() {
+	c = document.createElement( "div" );
+	c.id = "chContainer";
+
+	c.style.position = "fixed";
+	c.style.top = 0;
+	c.style.right = 0;
+	c.style.width = this.config.markerWidth + "px";
+	c.style.height = this.config.browserHeight + "px";
+
+	this.b.appendChild( c );
+	this.c = c;
+	return c;
+};
+
+chPainter.prototype.paintMarker = function( offset, colour ) {
+	m = document.createElement( "div" );
+	m.className += " chMarker"
+
+	m.style.position = "absolute";
+	m.style.backgroundColor = colour;
+	m.style.right = 0;
+	m.style.top = offset + "px";
+	m.style.width = this.config.markerWidth + "px";
+	m.style.height = this.config.markerHeight + "px";
+
+	this.c.appendChild( m );
+	return m;
+};
+
+chPainter.prototype.paintHeader = function( pattern ) {
+	headers =  this.config.headers;
+	markers =  this.config.markers;
+	for(var i = markers[pattern].length - 1; i >= 0; i--) {
+		this.paintMarker( markers[pattern][i], headers[pattern] );
+	};
+};
+
+chPainter.prototype.paintAllHeaders = function() {
+	headers =  this.config.headers;
+	for( pattern in headers ) {
+		if( headers.hasOwnProperty( pattern ) ) {
+			this.paintHeader( pattern );
+		}
+	};
+};
+
+chPainter.prototype.removeMarkers = function() {
+	markers = document.querySelectorAll(".chMarker");
+	for( var i = markers.length - 1; i >= 0; i-- ) {
+		this.c.removeChild( markers[i] );
+	};
+};
+
+chPainter.prototype.paintScroller = function( pos ) {
+	s = document.createElement( "div" );
+	s.id = "chScroller"
+
+	s.style.position = "absolute";
+	s.style.backgroundColor = this.config.scrollerColour;
+	s.style.opacity = "0.5";
+	s.style.right = 0;
+	s.style.top = pos + "px";
+	s.style.width = this.config.markerWidth + "px";
+	s.style.height = this.config.scrollerHeight + "px";
+	s.style.zIndex = "-1";
+
+	this.c.appendChild( s );
+};
+
+chPainter.prototype.removeScroller = function() {
+	scroller = document.querySelectorAll("#chScroller")[0];
+	this.c.removeChild( scroller );
+};
+
+function chScroller( conf ) {
+	this.config = conf;
+	this.prevPos = 0;
+};
+
+chScroller.prototype.hasMoved = function() {
+	pos = this.findPosition();
+	if( pos != this.prevPos ) {
+		this.prevPos = pos;
+		return true;
+	}
+	return false;
+};
+
+chScroller.prototype.findPosition = function() {
+	return window.scrollY;
+};
+
 function chMain( chConf ) {
 	this.config = chConf;
 	this.sizer;
 	this.finder;
-	this.painter;
 	this.calculator;
-};
-
-chMain.prototype.setMarkers = function( markers ) {
-	//
+	this.painter;
+	this.scroller;
 };
 
 chMain.prototype.init = function() {
@@ -176,15 +239,42 @@ chMain.prototype.init = function() {
 
 	this.calculator = new chCalculator( this.config );
 	this.config.modifier = this.calculator.calcModifier();
+	this.config.scrollerHeight = this.calculator.calcScrollerHeight();
 	this.config.markers = this.calculator.calcAllMarkerPos();
 
 	this.painter = new chPainter( this.config );
-	this.painter.paintContainer();
+	this.config.container = this.painter.paintContainer();
 	this.painter.paintAllHeaders();
+
+	this.scroller = new chScroller( this.config );
+	this.scroller.hasMoved();
+	this.painter.paintScroller( this.calculator.calcScrollerPos( this.scroller.prevPos ) );
 };
 
 chMain.prototype.bindings = function() {
 	//
+};
+
+chMain.prototype.updateMarkers = function() {
+	if( this.sizer.hasResized() ) {
+		this.config.modifier = this.calculator.calcModifier();
+		this.config.browserHeight = this.sizer.findBrowserHeight();
+		this.config.pageHeight = this.sizer.findPageHeight();
+		this.config.markers = this.calculator.calcAllMarkerPos();
+		this.config.scrollerHeight = this.calculator.calcScrollerHeight();
+
+		this.painter.removeMarkers();
+		this.painter.removeScroller();
+		this.painter.paintAllHeaders();
+		this.painter.paintScroller( this.calculator.calcScrollerPos( this.scroller.prevPos ) );
+	}
+};
+
+chMain.prototype.updateScroller = function() {
+	if( this.scroller.hasMoved() ) {
+		this.painter.removeScroller();
+		this.painter.paintScroller( this.calculator.calcScrollerPos( this.scroller.prevPos ) );
+	}
 };
 
 var checkpoint = new chMain( chConf );

@@ -34,3 +34,12 @@ chSizer.prototype.findPageHeight = function() {
 
 	return h;
 };
+
+chSizer.prototype.hasResized = function() {
+	if( checkpoint.config.browserHeight != this.findBrowserHeight() || checkpoint.config.pageHeight != this.findPageHeight() ) {
+		checkpoint.config.browserHeight = this.findBrowserHeight();
+		checkpoint.config.pageHeight = this.findPageHeight();
+		return true;
+	}
+	return false;
+};

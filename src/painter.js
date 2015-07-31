@@ -13,6 +13,7 @@ function chPainter( conf ) {
 
 chPainter.prototype.paintContainer = function() {
 	c = document.createElement( "div" );
+	c.id = "chContainer";
 
 	c.style.position = "fixed";
 	c.style.top = 0;
@@ -27,6 +28,7 @@ chPainter.prototype.paintContainer = function() {
 
 chPainter.prototype.paintMarker = function( offset, colour ) {
 	m = document.createElement( "div" );
+	m.className += " chMarker"
 
 	m.style.position = "absolute";
 	m.style.backgroundColor = colour;
@@ -54,4 +56,32 @@ chPainter.prototype.paintAllHeaders = function() {
 			this.paintHeader( pattern );
 		}
 	};
+};
+
+chPainter.prototype.removeMarkers = function() {
+	markers = document.querySelectorAll(".chMarker");
+	for( var i = markers.length - 1; i >= 0; i-- ) {
+		this.c.removeChild( markers[i] );
+	};
+};
+
+chPainter.prototype.paintScroller = function( pos ) {
+	s = document.createElement( "div" );
+	s.id = "chScroller"
+
+	s.style.position = "absolute";
+	s.style.backgroundColor = this.config.scrollerColour;
+	s.style.opacity = "0.5";
+	s.style.right = 0;
+	s.style.top = pos + "px";
+	s.style.width = this.config.markerWidth + "px";
+	s.style.height = this.config.scrollerHeight + "px";
+	s.style.zIndex = "-1";
+
+	this.c.appendChild( s );
+};
+
+chPainter.prototype.removeScroller = function() {
+	scroller = document.querySelectorAll("#chScroller")[0];
+	this.c.removeChild( scroller );
 };

@@ -33,3 +33,11 @@ chCalculator.prototype.calcAllMarkerPos = function() {
 
 	return marks;
 };
+
+chCalculator.prototype.calcScrollerHeight = function() {
+	return Math.ceil( this.config.modifier * this.config.browserHeight );
+};
+
+chCalculator.prototype.calcScrollerPos = function( pos ) {
+	return Math.ceil( this.config.modifier * pos );
+};
