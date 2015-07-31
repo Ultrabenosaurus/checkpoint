@@ -19,6 +19,10 @@ Just call `checkpoint.init()` once the page has loaded and it'll show up alongsi
 
 ### Custom
 
+## Credits
+
+Thanks to [pazguille](https://github.com/pazguille) for his excellent scroll event handler.
+
 ## License
 
 As usual with my work, this project is available under the BSD 3-Clause license. In short, you can do whatever you want with this code as long as:

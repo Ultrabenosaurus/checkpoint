@@ -24,6 +24,7 @@ module.exports = function(grunt) {
           'src/calculator.js',
           'src/painter.js',
           'src/scroller.js',
+          'lib/scrolling-0.1.0/scrolling.js',
           'src/main.js',
           'src/checkpoint.js'
         ],

@@ -40,27 +40,26 @@ chMain.prototype.init = function() {
 };
 
 chMain.prototype.bindings = function() {
-	//
+	scrolling(window, this.updateScroller)
 };
 
 chMain.prototype.updateMarkers = function() {
-	if( this.sizer.hasResized() ) {
-		this.config.modifier = this.calculator.calcModifier();
-		this.config.browserHeight = this.sizer.findBrowserHeight();
-		this.config.pageHeight = this.sizer.findPageHeight();
-		this.config.markers = this.calculator.calcAllMarkerPos();
-		this.config.scrollerHeight = this.calculator.calcScrollerHeight();
+	if( checkpoint.sizer.hasResized() ) {
+		checkpoint.config.modifier = checkpoint.calculator.calcModifier();
+		checkpoint.config.browserHeight = checkpoint.sizer.findBrowserHeight();
+		checkpoint.config.pageHeight = checkpoint.sizer.findPageHeight();
+		checkpoint.config.markers = checkpoint.calculator.calcAllMarkerPos();
+		checkpoint.config.scrollerHeight = checkpoint.calculator.calcScrollerHeight();
 
-		this.painter.removeMarkers();
-		this.painter.removeScroller();
-		this.painter.paintAllHeaders();
-		this.painter.paintScroller( this.calculator.calcScrollerPos( this.scroller.prevPos ) );
+		checkpoint.painter.removeMarkers();
+		checkpoint.painter.paintAllHeaders();
+		checkpoint.updateScroller();
 	}
 };
 
 chMain.prototype.updateScroller = function() {
-	if( this.scroller.hasMoved() ) {
-		this.painter.removeScroller();
-		this.painter.paintScroller( this.calculator.calcScrollerPos( this.scroller.prevPos ) );
+	if( checkpoint.scroller.hasMoved() ) {
+		checkpoint.painter.removeScroller();
+		checkpoint.painter.paintScroller( checkpoint.calculator.calcScrollerPos( checkpoint.scroller.prevPos ) );
 	}
 };
