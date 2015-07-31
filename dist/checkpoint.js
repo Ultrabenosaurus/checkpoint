@@ -2,42 +2,20 @@
 * https://github.com/Ultrabenosaurus/checkpoint
 * Copyright (c) 2015 Dan Bennett; Licensed BSD-3-Clause */
 var chConf = {
-	jquery: true,
+	markerWidth: 20,
+	markerHeight: 5,
 	headers: {
-		h1: "#000",
-		h2: "#000",
-		h3: "#000",
-		h4: "#000",
-		h5: "#000",
-		h6: "#000"
+		h1: "#5ebef9",
+		h2: "#2daaf7",
+		h3: "#0993e8",
+		h4: "#0774b7",
+		h5: "#055586",
+		h6: "#033655"
 	}
 };
-
-if( typeof $ == 'undefined' ) {
-	chConf.jquery = false;
-}
 
 function chSizer( conf ) {
-	this.conf = conf;
-	this.browserWidth = this.findBrowserWidth();
-	this.pageWidth = this.findPageWidth();
-	this.paintWidth = this.calcWidth();
-	this.browserHeight = this.findBrowserHeight();
-	this.pageHeight = this.findPageHeight();
-	this.paintHeight = this.calcHeight();
-};
-
-chSizer.prototype.findBrowserWidth = function() {
-	w = false;
-	if( typeof window.innerWidth != 'undefined' ) {
-		w = window.innerWidth;
-	} else if( typeof document.documentElement != 'undefined' && typeof document.documentElement.clientWidth != 'undefined' && document.documentElement.clientWidth != 0 ){
-		w = document.documentElement.clientWidth;
-	} else {
-		w = document.getElementsByTagName('body')[0].clientWidth;
-	}
-
-	return w;
+	this.config = conf;
 };
 
 chSizer.prototype.findBrowserHeight = function() {
@@ -53,19 +31,6 @@ chSizer.prototype.findBrowserHeight = function() {
 	return h;
 };
 
-chSizer.prototype.findPageWidth = function() {
-	w = false;
-	if( typeof document.body != 'undefined' && typeof document.body.scrollWidth != undefined ){
-		w = Math.max( document.body.scrollWidth, document.documentElement.scrollWidth );
-	} else {
-		b = document.getElementsByTagName('body')[0];
-		d = document.getElementsByTagName('html')[0];
-		w = Math.max( b.scrollWidth, d.scrollWidth );
-	}
-
-	return w;
-};
-
 chSizer.prototype.findPageHeight = function() {
 	h = false;
 	if( typeof document.body != 'undefined' && typeof document.body.scrollHeight != undefined ){
@@ -79,17 +44,8 @@ chSizer.prototype.findPageHeight = function() {
 	return h;
 };
 
-chSizer.prototype.calcWidth = function() {
-	// not sure if this will ever be dynamic, maybe for mobile? though I think checkpoint shouldn't be visible on mobile
-	return 10;
-};
-
-chSizer.prototype.calcHeight = function() {
-	return ( this.browserHeight / this.pageHeight );
-};
-
 function chFinder( conf ) {
-	this.conf = conf;
+	this.config = conf;
 };
 
 chFinder.prototype.findHeaders = function( pattern ) {
@@ -105,7 +61,8 @@ chFinder.prototype.findHeaderOffsets = function( headers ) {
 	return h;
 }
 
-chFinder.prototype.findAllOffsets = function( patts ) {
+chFinder.prototype.findAllOffsets = function() {
+	patts =  this.config.headers;
 	offs = {};
 	for( pattern in patts ) {
 		if( patts.hasOwnProperty( pattern ) ) {
@@ -117,10 +74,92 @@ chFinder.prototype.findAllOffsets = function( patts ) {
 	return offs;
 };
 
+function chPainter( conf ) {
+	this.config = conf;
+	this.b = ( ( typeof document.body != 'undefined' ) ? document.body : document.getElementsByTagName('body')[0] );
+	this.c;
+};
+
+chPainter.prototype.paintContainer = function() {
+	c = document.createElement( "div" );
+
+	c.style.position = "fixed";
+	c.style.top = 0;
+	c.style.right = 0;
+	c.style.width = this.config.markerWidth + "px";
+	c.style.height = this.config.browserHeight + "px";
+
+	this.b.appendChild( c );
+	this.c = c;
+	return c;
+};
+
+chPainter.prototype.paintMarker = function( offset, colour ) {
+	m = document.createElement( "div" );
+
+	m.style.position = "absolute";
+	m.style.backgroundColor = colour;
+	m.style.right = 0;
+	m.style.top = offset + "px";
+	m.style.width = this.config.markerWidth + "px";
+	m.style.height = this.config.markerHeight + "px";
+
+	this.c.appendChild( m );
+	return m;
+};
+
+chPainter.prototype.paintHeader = function( pattern ) {
+	headers =  this.config.headers;
+	markers =  this.config.markers;
+	for(var i = markers[pattern].length - 1; i >= 0; i--) {
+		this.paintMarker( markers[pattern][i], headers[pattern] );
+	};
+};
+
+chPainter.prototype.paintAllHeaders = function() {
+	headers =  this.config.headers;
+	for( pattern in headers ) {
+		if( headers.hasOwnProperty( pattern ) ) {
+			this.paintHeader( pattern );
+		}
+	};
+};
+
+function chCalculator( conf ) {
+	this.config = conf;
+};
+
+chCalculator.prototype.calcModifier = function() {
+	return ( this.config.browserHeight / this.config.pageHeight );
+};
+
+chCalculator.prototype.calcMarkerPos = function( offs ) {
+	m = [];
+	for (var i = offs.length - 1; i >= 0; i--) {
+		m[i] = Math.ceil( offs[i] * this.config.modifier );
+	};
+
+	return m;
+};
+
+chCalculator.prototype.calcAllMarkerPos = function() {
+	offsets = this.config.offsets;
+	marks = {};
+	for( pattern in offsets ) {
+		if( offsets.hasOwnProperty( pattern ) ) {
+			marks[pattern] = this.calcMarkerPos( offsets[pattern] );
+		}
+	};
+
+	return marks;
+};
+
 function chMain( chConf ) {
-	this.conf = chConf;
+	this.config = chConf;
 	this.sizer;
 	this.finder;
+	this.painter;
+	this.calculator;
 };
 
 chMain.prototype.setMarkers = function( markers ) {
@@ -128,30 +167,24 @@ chMain.prototype.setMarkers = function( markers ) {
 };
 
 chMain.prototype.init = function() {
-	this.sizer = new chSizer( this.conf );
-	this.finder = new chFinder( this.conf );
-	this.conf.offsets = this.finder.findAllOffsets( this.conf.headers );
-	this.conf.markers = this.calcAllMarkerPos( this.conf.headers );
+	this.sizer = new chSizer( this.config );
+	this.config.browserHeight = this.sizer.findBrowserHeight();
+	this.config.pageHeight = this.sizer.findPageHeight();
+
+	this.finder = new chFinder( this.config );
+	this.config.offsets = this.finder.findAllOffsets();
+
+	this.calculator = new chCalculator( this.config );
+	this.config.modifier = this.calculator.calcModifier();
+	this.config.markers = this.calculator.calcAllMarkerPos();
+
+	this.painter = new chPainter( this.config );
+	this.painter.paintContainer();
+	this.painter.paintAllHeaders();
 };
 
-chMain.prototype.calcMarkerPos = function( offs ) {
-	m = [];
-	for (var i = headers.length - 1; i >= 0; i--) {
-		m[i] = Math.ceil( offs[i] * this.sizer.paintHeight );
-	};
-
-	return m;
-};
-
-chMain.prototype.calcAllMarkerPos = function( headers ) {
-	marks = {};
-	for( pattern in headers ) {
-		if( headers.hasOwnProperty( pattern ) ) {
-			marks[pattern] = this.calcMarkerPos( headers.pattern );
-		}
-	};
-
-	return marks;
+chMain.prototype.bindings = function() {
+	//
 };
 
 var checkpoint = new chMain( chConf );

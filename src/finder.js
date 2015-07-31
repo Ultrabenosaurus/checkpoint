@@ -6,7 +6,7 @@
 */
 
 function chFinder( conf ) {
-	this.conf = conf;
+	this.config = conf;
 };
 
 chFinder.prototype.findHeaders = function( pattern ) {
@@ -22,7 +22,8 @@ chFinder.prototype.findHeaderOffsets = function( headers ) {
 	return h;
 }
 
-chFinder.prototype.findAllOffsets = function( patts ) {
+chFinder.prototype.findAllOffsets = function() {
+	patts =  this.config.headers;
 	offs = {};
 	for( pattern in patts ) {
 		if( patts.hasOwnProperty( pattern ) ) {

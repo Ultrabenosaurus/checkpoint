@@ -6,9 +6,11 @@
 */
 
 function chMain( chConf ) {
-	this.conf = chConf;
+	this.config = chConf;
 	this.sizer;
 	this.finder;
+	this.painter;
+	this.calculator;
 };
 
 chMain.prototype.setMarkers = function( markers ) {
@@ -16,28 +18,22 @@ chMain.prototype.setMarkers = function( markers ) {
 };
 
 chMain.prototype.init = function() {
-	this.sizer = new chSizer( this.conf );
-	this.finder = new chFinder( this.conf );
-	this.conf.offsets = this.finder.findAllOffsets( this.conf.headers );
-	this.conf.markers = this.calcAllMarkerPos( this.conf.headers );
+	this.sizer = new chSizer( this.config );
+	this.config.browserHeight = this.sizer.findBrowserHeight();
+	this.config.pageHeight = this.sizer.findPageHeight();
+
+	this.finder = new chFinder( this.config );
+	this.config.offsets = this.finder.findAllOffsets();
+
+	this.calculator = new chCalculator( this.config );
+	this.config.modifier = this.calculator.calcModifier();
+	this.config.markers = this.calculator.calcAllMarkerPos();
+
+	this.painter = new chPainter( this.config );
+	this.painter.paintContainer();
+	this.painter.paintAllHeaders();
 };
 
-chMain.prototype.calcMarkerPos = function( offs ) {
-	m = [];
-	for (var i = headers.length - 1; i >= 0; i--) {
-		m[i] = Math.ceil( offs[i] * this.sizer.paintHeight );
-	};
-
-	return m;
-};
-
-chMain.prototype.calcAllMarkerPos = function( headers ) {
-	marks = {};
-	for( pattern in headers ) {
-		if( headers.hasOwnProperty( pattern ) ) {
-			marks[pattern] = this.calcMarkerPos( headers.pattern );
-		}
-	};
-
-	return marks;
+chMain.prototype.bindings = function() {
+	//
 };

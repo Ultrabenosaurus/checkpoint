@@ -21,6 +21,8 @@ module.exports = function(grunt) {
           'src/config.js',
           'src/sizer.js',
           'src/finder.js',
+          'src/painter.js',
+          'src/calculator.js',
           'src/main.js',
           'src/checkpoint.js'
         ],

@@ -1,21 +1,18 @@
 
 /**
- * checkpoint.config
+ * checkpoint.configig
  *
 */
 
 var chConf = {
-	jquery: true,
+	markerWidth: 20,
+	markerHeight: 5,
 	headers: {
-		h1: "#000",
-		h2: "#000",
-		h3: "#000",
-		h4: "#000",
-		h5: "#000",
-		h6: "#000"
+		h1: "#5ebef9",
+		h2: "#2daaf7",
+		h3: "#0993e8",
+		h4: "#0774b7",
+		h5: "#055586",
+		h6: "#033655"
 	}
 };
-
-if( typeof $ == 'undefined' ) {
-	chConf.jquery = false;
-}
