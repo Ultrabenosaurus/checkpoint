@@ -1,12 +1,17 @@
 
 /**
- * checkpoint.configig
+ * checkpoint
+ *   chConfig
  *
 */
 
-var chConf = {
+var chConfig = {
+	// marker settings
 	markerWidth: 20,
 	markerHeight: 5,
+	markerClickable: true,
+
+	// headings to outline and the colour of their markers
 	headers: {
 		h1: "#5ebef9",
 		h2: "#2daaf7",
@@ -15,5 +20,8 @@ var chConf = {
 		h5: "#055586",
 		h6: "#033655"
 	},
+
+	// scroll indicator
+	scrollerVisible: true,
 	scrollerColour: "#000"
 };

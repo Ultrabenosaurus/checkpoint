@@ -18,7 +18,6 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [
-          'src/config.js',
           'src/sizer.js',
           'src/finder.js',
           'src/calculator.js',
@@ -26,7 +25,6 @@ module.exports = function(grunt) {
           'src/scroller.js',
           'lib/scrolling-0.1.0/scrolling.js',
           'src/main.js',
-          'src/checkpoint.js'
         ],
         dest: 'dist/<%= pkg.name %>.js'
       }

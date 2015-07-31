@@ -1,20 +1,6 @@
 /*! checkpoint.js - v0.1.0 - 2015-07-31
 * https://github.com/Ultrabenosaurus/checkpoint
 * Copyright (c) 2015 Dan Bennett; Licensed BSD-3-Clause */
-var chConf = {
-	markerWidth: 20,
-	markerHeight: 5,
-	headers: {
-		h1: "#5ebef9",
-		h2: "#2daaf7",
-		h3: "#0993e8",
-		h4: "#0774b7",
-		h5: "#055586",
-		h6: "#033655"
-	},
-	scrollerColour: "#000"
-};
-
 function chSizer( conf ) {
 	this.config = conf;
 };
@@ -419,7 +405,7 @@ if (typeof window.define === 'function' && window.define.amd !== undefined) {
 };
 
 }(this));
-function chMain( chConf ) {
+function cp( chConf ) {
 	this.config = chConf;
 	this.sizer;
 	this.finder;
@@ -431,7 +417,7 @@ function chMain( chConf ) {
 	this.bindings();
 };
 
-chMain.prototype.init = function() {
+cp.prototype.init = function() {
 	this.sizer = new chSizer( this.config );
 	this.config.browserHeight = this.sizer.findBrowserHeight();
 	this.config.pageHeight = this.sizer.findPageHeight();
@@ -453,11 +439,11 @@ chMain.prototype.init = function() {
 	this.painter.paintScroller( this.calculator.calcScrollerPos( this.scroller.prevPos ) );
 };
 
-chMain.prototype.bindings = function() {
+cp.prototype.bindings = function() {
 	scrolling(window, this.updateScroller)
 };
 
-chMain.prototype.updateMarkers = function() {
+cp.prototype.updateMarkers = function() {
 	if( checkpoint.sizer.hasResized() ) {
 		checkpoint.config.modifier = checkpoint.calculator.calcModifier();
 		checkpoint.config.browserHeight = checkpoint.sizer.findBrowserHeight();
@@ -471,11 +457,9 @@ chMain.prototype.updateMarkers = function() {
 	}
 };
 
-chMain.prototype.updateScroller = function() {
+cp.prototype.updateScroller = function() {
 	if( checkpoint.scroller.hasMoved() ) {
 		checkpoint.painter.removeScroller();
 		checkpoint.painter.paintScroller( checkpoint.calculator.calcScrollerPos( checkpoint.scroller.prevPos ) );
 	}
 };
-
-var checkpoint = new chMain( chConf );

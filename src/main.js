@@ -1,11 +1,11 @@
 
 /**
  * checkpoint
- *   chMain
+ *   cp
  *
 */
 
-function chMain( chConf ) {
+function cp( chConf ) {
 	this.config = chConf;
 	this.sizer;
 	this.finder;
@@ -17,7 +17,7 @@ function chMain( chConf ) {
 	this.bindings();
 };
 
-chMain.prototype.init = function() {
+cp.prototype.init = function() {
 	this.sizer = new chSizer( this.config );
 	this.config.browserHeight = this.sizer.findBrowserHeight();
 	this.config.pageHeight = this.sizer.findPageHeight();
@@ -39,11 +39,11 @@ chMain.prototype.init = function() {
 	this.painter.paintScroller( this.calculator.calcScrollerPos( this.scroller.prevPos ) );
 };
 
-chMain.prototype.bindings = function() {
+cp.prototype.bindings = function() {
 	scrolling(window, this.updateScroller)
 };
 
-chMain.prototype.updateMarkers = function() {
+cp.prototype.updateMarkers = function() {
 	if( checkpoint.sizer.hasResized() ) {
 		checkpoint.config.modifier = checkpoint.calculator.calcModifier();
 		checkpoint.config.browserHeight = checkpoint.sizer.findBrowserHeight();
@@ -57,7 +57,7 @@ chMain.prototype.updateMarkers = function() {
 	}
 };
 
-chMain.prototype.updateScroller = function() {
+cp.prototype.updateScroller = function() {
 	if( checkpoint.scroller.hasMoved() ) {
 		checkpoint.painter.removeScroller();
 		checkpoint.painter.paintScroller( checkpoint.calculator.calcScrollerPos( checkpoint.scroller.prevPos ) );
