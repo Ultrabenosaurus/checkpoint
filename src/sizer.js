@@ -1,21 +1,9 @@
-/*! checkpoint.js - v0.1.0 - 2015-07-31
-* https://github.com/Ultrabenosaurus/checkpoint
-* Copyright (c) 2015 Dan Bennett; Licensed BSD-3-Clause */
-var chConf = {
-	jquery: true,
-	headers: {
-		h1: "#000",
-		h2: "#000",
-		h3: "#000",
-		h4: "#000",
-		h5: "#000",
-		h6: "#000"
-	}
-};
 
-if( typeof $ == 'undefined' ) {
-	chConf.jquery = false;
-}
+/**
+ * checkpoint
+ *   chSizer
+ *
+*/
 
 function chSizer( conf ) {
 	this.conf = conf;
@@ -87,72 +75,3 @@ chSizer.prototype.calcWidth = function() {
 chSizer.prototype.calcHeight = function() {
 	return ( this.browserHeight / this.pageHeight );
 };
-
-function chFinder( conf ) {
-	this.conf = conf;
-};
-
-chFinder.prototype.findHeaders = function( pattern ) {
-	return document.querySelectorAll( pattern );
-};
-
-chFinder.prototype.findHeaderOffsets = function( headers ) {
-	h = [];
-	for (var i = headers.length - 1; i >= 0; i--) {
-		h[i] = headers[i].offsetTop;
-	};
-
-	return h;
-}
-
-chFinder.prototype.findAllOffsets = function( patts ) {
-	offs = {};
-	for( pattern in patts ) {
-		if( patts.hasOwnProperty( pattern ) ) {
-			f = this.findHeaders( pattern );
-			offs[pattern] = this.findHeaderOffsets( f );
-		}
-	};
-
-	return offs;
-};
-
-function chMain( chConf ) {
-	this.conf = chConf;
-	this.sizer;
-	this.finder;
-};
-
-chMain.prototype.setMarkers = function( markers ) {
-	//
-};
-
-chMain.prototype.init = function() {
-	this.sizer = new chSizer( this.conf );
-	this.finder = new chFinder( this.conf );
-	this.conf.offsets = this.finder.findAllOffsets( this.conf.headers );
-	this.conf.markers = this.calcAllMarkerPos( this.conf.headers );
-};
-
-chMain.prototype.calcMarkerPos = function( offs ) {
-	m = [];
-	for (var i = headers.length - 1; i >= 0; i--) {
-		m[i] = Math.ceil( offs[i] * this.sizer.paintHeight );
-	};
-
-	return m;
-};
-
-chMain.prototype.calcAllMarkerPos = function( headers ) {
-	marks = {};
-	for( pattern in headers ) {
-		if( headers.hasOwnProperty( pattern ) ) {
-			marks[pattern] = this.calcMarkerPos( headers.pattern );
-		}
-	};
-
-	return marks;
-};
-
-var checkpoint = new chMain( chConf );
-checkpoint.init();

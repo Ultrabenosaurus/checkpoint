@@ -18,9 +18,11 @@ module.exports = function(grunt) {
       },
       dist: {
         src: [
-          'src/checkpoint.js',
-          'src/screen.js',
-          'src/config.js'
+          'src/config.js',
+          'src/sizer.js',
+          'src/finder.js',
+          'src/main.js',
+          'src/checkpoint.js'
         ],
         dest: 'dist/<%= pkg.name %>.js'
       }
