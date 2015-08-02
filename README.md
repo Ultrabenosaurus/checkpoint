@@ -5,19 +5,32 @@ like a scrollbar, but with context
 
 ## About
 
-Think along the lines of how Chrome marks occurences of search results when you do Find in Page, but giving an outline of page content. The default setting is to scan for H tags 1 though 6, but you can pass a class prefix to use instead. Section depth/nesting will be done numerically as with H tags rather than actual HTML element structure, to give you more freedom over your architecture.
+Think along the lines of how Chrome marks occurences of search results when you do Find in Page, but giving an outline of page content. Will work with element names or classnames. Section depth/nesting will be done in the order they're listed in the config block, rather than HTML element structure to give you more freedom over your architecture.
+
+## Changelog
+
+### 0.1.0
+
+* first release
+* **NO DEFAULT SETTINGS** (see demos for example config)
+* config block MUST be called `chConfig` and checkpoint MUST be initialised as a top-level variable named `checkpoint`
+* two builds: document outline with or without scroll indicator
+  * scroll indicator is mostly superfluous at the moment, mirroring the native scrollbar, but will be improved on
+* can outline the document based on elements or classnames
+* markers redraw automatically on browser resize
+  * doesn't seem to register on Windows 10 Chrome when maximising/restoring the window
 
 ## Usage
 
 ### Install
 
-[Download the latest build](https://github.com/Ultrabenosaurus/checkpoint/blob/master/dist/checkpoint.min.js) directly or clone this repo to build it yourself via Grunt, then include the JS file in project however you need to.
+[Download the latest build](https://github.com/Ultrabenosaurus/checkpoint/blob/master/dist/checkpoint.min.js) directly or clone this repo to build it yourself via Grunt, then include the JS file in your project at the end of the body after a config block (see demos).
 
-### Default
+### Customise
 
-Just call `checkpoint.init()` once the page has loaded and it'll show up alongside the scrollbar. Nothing else needed.
+See the demos for config examples.
 
-### Custom
+If you need to refresh checkpoint at any time you can call `checkpoint.updateMarkers()`. If you change the config on-the-fly and want to reboot checkpoint, call `checkpoint = new cp( chConfig );`.
 
 ## Credits
 
