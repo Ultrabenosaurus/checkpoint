@@ -131,6 +131,7 @@ chPainter.prototype.paintContainer = function() {
 	c = document.createElement( "div" );
 	c.id = "chContainer";
 
+	c.style.zIndex = 99997;
 	c.style.position = "fixed";
 	c.style.top = 0;
 	c.style.right = 0;
@@ -146,6 +147,7 @@ chPainter.prototype.paintMarker = function( offset, colour, ids ) {
 	m = document.createElement( "a" );
 	m.className += " chMarker";
 
+	m.style.zIndex = 99999;
 	m.style.position = "absolute";
 	m.style.backgroundColor = colour;
 	m.style.right = 0;
@@ -204,7 +206,7 @@ chPainter.prototype.paintScroller = function( pos ) {
 	s.style.top = pos + "px";
 	s.style.width = this.config.markerWidth + "px";
 	s.style.height = this.config.scrollerHeight + "px";
-	s.style.zIndex = "-1";
+	s.style.zIndex = 99998;
 
 	this.c.appendChild( s );
 };
