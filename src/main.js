@@ -14,10 +14,13 @@ function cp( chConf ) {
 	this.scroller;
 
 	this.init();
-	this.bindings();
 };
 
 cp.prototype.init = function() {
+	if( "undefined" == typeof chSizer || "undefined" == typeof chFinder || "undefined" == typeof chCalculator || "undefined" == typeof chPainter ) {
+		//
+		return false;
+	}
 	this.sizer = new chSizer( this.config );
 	this.config.browserHeight = this.sizer.findBrowserHeight();
 	this.config.pageHeight = this.sizer.findPageHeight();
@@ -34,13 +37,12 @@ cp.prototype.init = function() {
 	this.config.container = this.painter.paintContainer();
 	this.painter.paintAllHeaders();
 
-	this.scroller = new chScroller( this.config );
-	this.scroller.hasMoved();
-	this.painter.paintScroller( this.calculator.calcScrollerPos( this.scroller.prevPos ) );
-};
-
-cp.prototype.bindings = function() {
-	scrolling(window, this.updateScroller)
+	if( "undefined" != typeof chScroller && "undefined" != typeof scrolling ) {
+		this.scroller = new chScroller( this.config );
+		this.scroller.hasMoved();
+		this.painter.paintScroller( this.calculator.calcScrollerPos( this.scroller.prevPos ) );
+		scrolling(window, this.updateScroller);
+	}
 };
 
 cp.prototype.updateMarkers = function() {
@@ -63,3 +65,5 @@ cp.prototype.updateScroller = function() {
 		checkpoint.painter.paintScroller( checkpoint.calculator.calcScrollerPos( checkpoint.scroller.prevPos ) );
 	}
 };
+
+var checkpoint = new cp( chConfig );

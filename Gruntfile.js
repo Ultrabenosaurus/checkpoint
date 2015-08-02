@@ -16,7 +16,7 @@ module.exports = function(grunt) {
         banner: '<%= banner %>',
         stripBanners: true
       },
-      dist: {
+      full: {
         src: [
           'src/sizer.js',
           'src/finder.js',
@@ -27,15 +27,29 @@ module.exports = function(grunt) {
           'src/main.js',
         ],
         dest: 'dist/<%= pkg.name %>.js'
+      },
+      outline: {
+        src: [
+          'src/sizer.js',
+          'src/finder.js',
+          'src/calculator.js',
+          'src/painter.js',
+          'src/main.js',
+        ],
+        dest: 'dist/<%= pkg.name %>-outline.js'
       }
     },
     uglify: {
       options: {
         banner: '<%= banner %>'
       },
-      dist: {
-        src: '<%= concat.dist.dest %>',
+      full: {
+        src: '<%= concat.full.dest %>',
         dest: 'dist/<%= pkg.name %>.min.js'
+      },
+      outline: {
+        src: '<%= concat.outline.dest %>',
+        dest: 'dist/<%= pkg.name %>-outline.min.js'
       }
     },
     jshint: {
@@ -88,7 +102,10 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
 
-  grunt.registerTask('dist', ['concat', 'uglify']);
   grunt.registerTask('test', ['jshint', 'qunit']);
+
+  grunt.registerTask('build', ['concat', 'uglify']);
+  grunt.registerTask('build-full', ['concat:full', 'uglify:full']);
+  grunt.registerTask('build-outline', ['concat:outline', 'uglify:outline']);
 
 };
