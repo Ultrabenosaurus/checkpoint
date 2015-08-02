@@ -26,9 +26,9 @@ chPainter.prototype.paintContainer = function() {
 	return c;
 };
 
-chPainter.prototype.paintMarker = function( offset, colour ) {
-	m = document.createElement( "div" );
-	m.className += " chMarker"
+chPainter.prototype.paintMarker = function( offset, colour, ids ) {
+	m = document.createElement( "a" );
+	m.className += " chMarker";
 
 	m.style.position = "absolute";
 	m.style.backgroundColor = colour;
@@ -37,6 +37,17 @@ chPainter.prototype.paintMarker = function( offset, colour ) {
 	m.style.width = this.config.markerWidth + "px";
 	m.style.height = this.config.markerHeight + "px";
 
+	if( "undefined" != typeof this.config.markerClickable && this.config.markerClickable ) {
+		m.style.cursor = "pointer";
+		m.setAttribute( "data-checkpoint-target", "#" + ids[1]);
+		m.onclick = function() {
+			b = ( ( typeof document.body != 'undefined' ) ? document.body : document.getElementsByTagName('body')[0] );
+			t = document.querySelectorAll( this.getAttribute( "data-checkpoint-target" ) )[0];
+			b.scrollTop = t.offsetTop;
+			return false;
+		};
+	}
+
 	this.c.appendChild( m );
 	return m;
 };
@@ -44,8 +55,9 @@ chPainter.prototype.paintMarker = function( offset, colour ) {
 chPainter.prototype.paintHeader = function( pattern ) {
 	headers =  this.config.headers;
 	markers =  this.config.markers;
+	offsets =  this.config.offsets;
 	for(var i = markers[pattern].length - 1; i >= 0; i--) {
-		this.paintMarker( markers[pattern][i], headers[pattern] );
+		this.paintMarker( markers[pattern][i], headers[pattern], offsets[pattern][i] );
 	};
 };
 

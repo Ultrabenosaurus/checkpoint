@@ -16,7 +16,7 @@ chCalculator.prototype.calcModifier = function() {
 chCalculator.prototype.calcMarkerPos = function( offs ) {
 	m = [];
 	for (var i = offs.length - 1; i >= 0; i--) {
-		m[i] = Math.ceil( offs[i] * this.config.modifier );
+		m[i] = Math.ceil( offs[i][0] * this.config.modifier );
 	};
 
 	return m;
