@@ -7,6 +7,10 @@ like a scrollbar, but with context
 
 Think along the lines of how Chrome marks occurences of search results when you do Find in Page, but giving an outline of page content. Will work with element names or classnames. Section depth/nesting will be done in the order they're listed in the config block, rather than HTML element structure to give you more freedom over your architecture.
 
+## Compatibility
+
+So far only tested in Chrome (latest stable) on Windows 10. Plan to add qunit tests by version 0.2.0 and expand manual browser testing to include Firefox, IE, Opera, and Edge but only the latest versions. If I can find a way to automate testing of other browsers, probably via TravisCI, then I'll do that but I can't be bothered to do it manually.
+
 ## Changelog
 
 ### 0.1.0
