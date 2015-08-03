@@ -26,9 +26,9 @@ module.exports = function(grunt) {
           'lib/scrolling-0.1.0/scrolling.js',
           'src/main.js',
         ],
-        dest: 'dist/<%= pkg.name %>.js'
+        dest: 'dist/<%= pkg.name %>.full.js'
       },
-      outline: {
+      core: {
         src: [
           'src/sizer.js',
           'src/finder.js',
@@ -36,7 +36,7 @@ module.exports = function(grunt) {
           'src/painter.js',
           'src/main.js',
         ],
-        dest: 'dist/<%= pkg.name %>-outline.js'
+        dest: 'dist/<%= pkg.name %>.core.js'
       }
     },
     uglify: {
@@ -45,11 +45,11 @@ module.exports = function(grunt) {
       },
       full: {
         src: '<%= concat.full.dest %>',
-        dest: 'dist/<%= pkg.name %>.min.js'
+        dest: 'dist/<%= pkg.name %>.full.min.js'
       },
-      outline: {
-        src: '<%= concat.outline.dest %>',
-        dest: 'dist/<%= pkg.name %>-outline.min.js'
+      core: {
+        src: '<%= concat.core.dest %>',
+        dest: 'dist/<%= pkg.name %>.core.min.js'
       }
     },
     jshint: {
@@ -105,7 +105,7 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['jshint', 'qunit']);
 
   grunt.registerTask('build', ['concat', 'uglify']);
+  grunt.registerTask('build-core', ['concat:core', 'uglify:core']);
   grunt.registerTask('build-full', ['concat:full', 'uglify:full']);
-  grunt.registerTask('build-outline', ['concat:outline', 'uglify:outline']);
 
 };
