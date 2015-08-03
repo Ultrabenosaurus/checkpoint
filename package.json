@@ -1,8 +1,8 @@
 {
+  "version": "0.1.2",
   "name": "checkpoint",
-  "title": "checkpoint.js",
+  "title": "checkpoint",
   "description": "Like a scrollbar, but with context. Along the lines of how Chrome marks occurences of search results when you do Find in Page, but giving an outline of page contents.",
-  "version": "0.1.0",
   "main": "dist/checkpoint.min.js",
   "homepage": "https://github.com/Ultrabenosaurus/checkpoint",
   "license": "BSD-3-Clause",

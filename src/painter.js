@@ -15,6 +15,7 @@ chPainter.prototype.paintContainer = function() {
 	c = document.createElement( "div" );
 	c.id = "chContainer";
 
+	c.style.zIndex = 99997;
 	c.style.position = "fixed";
 	c.style.top = 0;
 	c.style.right = 0;
@@ -30,6 +31,7 @@ chPainter.prototype.paintMarker = function( offset, colour, ids ) {
 	m = document.createElement( "a" );
 	m.className += " chMarker";
 
+	m.style.zIndex = 99999;
 	m.style.position = "absolute";
 	m.style.backgroundColor = colour;
 	m.style.right = 0;
@@ -41,9 +43,15 @@ chPainter.prototype.paintMarker = function( offset, colour, ids ) {
 		m.style.cursor = "pointer";
 		m.setAttribute( "data-checkpoint-target", "#" + ids[1]);
 		m.onclick = function() {
-			b = ( ( typeof document.body != 'undefined' ) ? document.body : document.getElementsByTagName('body')[0] );
+			if (navigator.userAgent.toLowerCase().indexOf('webkit') !== -1){
+				b = ( ( typeof document.body != 'undefined' ) ? document.body : document.getElementsByTagName('body')[0] );
+			}else{
+				b = (document.documentElement || document.body.parentNode || document.body);
+			}
+
 			t = document.querySelectorAll( this.getAttribute( "data-checkpoint-target" ) )[0];
 			b.scrollTop = t.offsetTop;
+
 			return false;
 		};
 	}
@@ -88,7 +96,7 @@ chPainter.prototype.paintScroller = function( pos ) {
 	s.style.top = pos + "px";
 	s.style.width = this.config.markerWidth + "px";
 	s.style.height = this.config.scrollerHeight + "px";
-	s.style.zIndex = "-1";
+	s.style.zIndex = 99998;
 
 	this.c.appendChild( s );
 };
