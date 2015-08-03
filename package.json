@@ -1,5 +1,5 @@
 {
-  "version": "0.1.1",
+  "version": "0.1.2",
   "name": "checkpoint",
   "title": "checkpoint",
   "description": "Like a scrollbar, but with context. Along the lines of how Chrome marks occurences of search results when you do Find in Page, but giving an outline of page contents.",

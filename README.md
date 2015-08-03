@@ -5,17 +5,27 @@ like a scrollbar, but with context
 
 ## About
 
-Current Build: **v0.1.1** _([changelog & release notes](CHANGELOG.md))_
-
 Think along the lines of how Chrome marks occurences of search results when you do Find in Page, but giving an outline of page content. Will work with element names or classnames. Section depth/nesting will be done in the order they're listed in the config block, rather than HTML element structure to give you more freedom over your architecture.
-
-## Compatibility
-
-So far only tested in Chrome (latest stable) on Windows 10. Plan to add qunit tests by version 0.2.0 and expand manual browser testing to include Firefox, IE, Opera, and Edge but only the latest versions. If I can find a way to automate testing of other browsers, probably via TravisCI, then I'll do that but I can't be bothered to do it manually.
 
 ## Versions
 
-This section isn't about the version numbers, but the combination of modules.
+Changelog and release notes can be found in [CHANGELOG.md](CHANGELOG.md)
+
+## Testing
+
+Results of manual browser testing on Windows 10 using the latest versions. I plan to add qunit tests by version 0.2.0. If I can find a way to automate testing of other browser versions, probably via TravisCI, then I'll do that but I can't be bothered to do it manually.
+
+Feature | Chrome | Firefox | Opera | Safari | IE | Edge
+--------|--------|---------|-------|--------|----|-----
+Outline (HTML) | Y | Y | Y | Y | Y | Y
+Outline (class) | Y | Y | Y | Y | Y | Y
+Clickable | Y | Y | Y | Y | Y | Y
+Scroller | Y | Y | Y | Y | N | Y
+Resize | Y* | Y | Y | Y* | Y* | Y*
+
+*Resize: does not trigger when using the maximise/restore button, but does work when manually resizing the window.
+
+## Builds
 
 Currently, the only combinations I'm building are `core` and `full` as there isn't much functionality other than the core offering yet. Hopefully this list will be expanded as I continue to develop checkpoint.
 

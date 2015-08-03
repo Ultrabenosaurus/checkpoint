@@ -1,6 +1,11 @@
 Changelog & Notes
 =================
 
+## 0.1.2
+
+* fixed click-to-scroll in non-webkit/blink browsers
+* added manual browser testing results for current features
+
 ## 0.1.1
 
 * added custom build instructions to README

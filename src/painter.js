@@ -43,9 +43,15 @@ chPainter.prototype.paintMarker = function( offset, colour, ids ) {
 		m.style.cursor = "pointer";
 		m.setAttribute( "data-checkpoint-target", "#" + ids[1]);
 		m.onclick = function() {
-			b = ( ( typeof document.body != 'undefined' ) ? document.body : document.getElementsByTagName('body')[0] );
+			if (navigator.userAgent.toLowerCase().indexOf('webkit') !== -1){
+				b = ( ( typeof document.body != 'undefined' ) ? document.body : document.getElementsByTagName('body')[0] );
+			}else{
+				b = (document.documentElement || document.body.parentNode || document.body);
+			}
+
 			t = document.querySelectorAll( this.getAttribute( "data-checkpoint-target" ) )[0];
 			b.scrollTop = t.offsetTop;
+
 			return false;
 		};
 	}
