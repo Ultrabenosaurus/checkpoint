@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Checkpoint by Ultrabenosaurus</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Checkpoint</h1>
+        <h2>like a scrollbar, but with context</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/Ultrabenosaurus/checkpoint/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/Ultrabenosaurus/checkpoint/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/Ultrabenosaurus/checkpoint" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h2>
+<a id="about" class="anchor" href="#about" aria-hidden="true"><span class="octicon octicon-link"></span></a>About</h2>
+
+<p>Think along the lines of how Chrome marks occurences of search results when you do Find in Page, but giving an outline of page content. Will work with element names or classnames. Section depth/nesting will be done in the order they're listed in the config block, rather than HTML element structure to give you more freedom over your architecture.</p>
+
+<h2>
+<a id="versions" class="anchor" href="#versions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Versions</h2>
+
+<p>Changelog and release notes can be found in <a href="CHANGELOG.md">CHANGELOG.md</a></p>
+
+<h2>
+<a id="testing" class="anchor" href="#testing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Testing</h2>
+
+<p>Results of manual browser testing on Windows 10 using the latest versions. I plan to add qunit tests by version 0.2.0. If I can find a way to automate testing of other browser versions, probably via TravisCI, then I'll do that but I can't be bothered to do it manually.</p>
+
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Chrome</th>
+<th>Firefox</th>
+<th>Opera</th>
+<th>Safari</th>
+<th>IE</th>
+<th>Edge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Outline (HTML)</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Outline (class)</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Clickable</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Scroller</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>N</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Resize</td>
+<td>Y*</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y*</td>
+<td>Y*</td>
+<td>Y*</td>
+</tr>
+</tbody>
+</table>
+
+<p>*Resize: does not trigger when using the maximise/restore button, but does work when manually resizing the window.</p>
+
+<h2>
+<a id="builds" class="anchor" href="#builds" aria-hidden="true"><span class="octicon octicon-link"></span></a>Builds</h2>
+
+<p>Currently, the only combinations I'm building are <code>core</code> and <code>full</code> as there isn't much functionality other than the core offering yet. Hopefully this list will be expanded as I continue to develop checkpoint.</p>
+
+<h3>
+<a id="core" class="anchor" href="#core" aria-hidden="true"><span class="octicon octicon-link"></span></a>Core</h3>
+
+<p>The most basic version of checkpoint built from the minimum required modules to provide any actual functionality. This will let you outline the page by HTML elements or classes, with or without the markers being clickable for navigation.</p>
+
+<h3>
+<a id="full" class="anchor" href="#full" aria-hidden="true"><span class="octicon octicon-link"></span></a>Full</h3>
+
+<p>This is the full build, compiled from all available modules and thus providing all available functionality for you to use. If there are features you don't want it is recommended to pick a different version or to build your own, in order to keep the file size as low as possible.</p>
+
+<h3>
+<a id="custom" class="anchor" href="#custom" aria-hidden="true"><span class="octicon octicon-link"></span></a>Custom</h3>
+
+<p>If you want to build a custom version of checkpoint you'll need <a href="https://nodejs.org/">Node/npm</a>, <a href="http://gruntjs.com/getting-started">Grunt</a>, and a copy of this entire repo - either by clone or <a href="https://github.com/Ultrabenosaurus/checkpoint/releases/latest">download</a>. Once that's all in place you can move on to experimenting with different builds.</p>
+
+<p>All default versions will be available to play with - along with appropriate demo files - in your copy of the repo. You can also see which modules are used for each by taking a look in the <code>concat</code> section of <code>Gruntfile.js</code>, for example the <code>core</code> is built as such:</p>
+
+<div class="highlight highlight-js"><pre>core<span class="pl-k">:</span> {
+  src<span class="pl-k">:</span> [
+    <span class="pl-s"><span class="pl-pds">'</span>src/sizer.js<span class="pl-pds">'</span></span>,
+    <span class="pl-s"><span class="pl-pds">'</span>src/finder.js<span class="pl-pds">'</span></span>,
+    <span class="pl-s"><span class="pl-pds">'</span>src/calculator.js<span class="pl-pds">'</span></span>,
+    <span class="pl-s"><span class="pl-pds">'</span>src/painter.js<span class="pl-pds">'</span></span>,
+    <span class="pl-s"><span class="pl-pds">'</span>src/main.js<span class="pl-pds">'</span></span>,
+  ],
+  dest<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>dist/&lt;%= pkg.name %&gt;.core.&lt;%= pkg.version %&gt;.js<span class="pl-pds">'</span></span>
+}</pre></div>
+
+<p>You'll need a new <code>uglify</code> profile as well, like so:</p>
+
+<div class="highlight highlight-js"><pre>core<span class="pl-k">:</span> {
+  src<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>&lt;%= concat.core.dest %&gt;<span class="pl-pds">'</span></span>,
+  dest<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>dist/&lt;%= pkg.name %&gt;.core.&lt;%= pkg.version %&gt;.min.js<span class="pl-pds">'</span></span>
+}</pre></div>
+
+<p>Whatever modules you want in your custom version, you must always include the modules used in the <code>core</code> build or you will run into errors - if it works at all. I recommend you create a new <code>concat</code> profile rather than editing an existing one.</p>
+
+<p>After you've setup the <code>concat</code> and <code>uglify</code> profiles, you'll want to duplicate the following line and replace the three occurrences of <code>core</code> with the name you gave to your <code>concat</code> and <code>uglify</code> profiles.</p>
+
+<div class="highlight highlight-js"><pre>grunt.registerTask(<span class="pl-s"><span class="pl-pds">'</span>build-core<span class="pl-pds">'</span></span>, [<span class="pl-s"><span class="pl-pds">'</span>concat:core<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>uglify:core<span class="pl-pds">'</span></span>]);</pre></div>
+
+<p>Once that's done make sure you've also changed the <code>core</code> in the <code>dest</code> settings of both your <code>concat</code> and <code>uglify</code> profiles. You can now run your new build task and find it in the <code>dist/</code> directory.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h3>
+
+<p><a href="https://github.com/Ultrabenosaurus/checkpoint/releases/latest">Download the latest build</a> directly or clone this repo to build it yourself via Grunt, then include the JS file in your project at the end of the body after a config block (see demos).</p>
+
+<h3>
+<a id="config" class="anchor" href="#config" aria-hidden="true"><span class="octicon octicon-link"></span></a>Config</h3>
+
+<p>See the demos for config examples.</p>
+
+<p>If you need to refresh checkpoint at any time you can call <code>checkpoint.updateMarkers()</code>. If you change the config on-the-fly and want to reboot checkpoint, call <code>checkpoint = new cp( chConfig );</code>.</p>
+
+<h2>
+<a id="credits" class="anchor" href="#credits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Credits</h2>
+
+<p>Thanks to <a href="https://github.com/pazguille">pazguille</a> for his excellent scroll event handler.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>As usual with my work, this project is available under the BSD 3-Clause license. In short, you can do whatever you want with this code as long as:</p>
+
+<ul>
+<li>I am always recognised as the original author.</li>
+<li>I am not used to advertise any derivative works without prior permission.</li>
+<li>You include a copy of said license and attribution with any and all redistributions of this code, including derivative works.</li>
+</ul>
+
+<p>For more details, read the included LICENSE.md file or read about it on <a href="http://opensource.org/licenses/BSD-3-Clause">opensource.org</a>.</p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
