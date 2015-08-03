@@ -5,7 +5,7 @@ like a scrollbar, but with context
 
 ## About
 
-Current Build: **v0.1.1**
+Current Build: **v0.1.1** _([changelog & release notes](CHANGELOG.md))_
 
 Think along the lines of how Chrome marks occurences of search results when you do Find in Page, but giving an outline of page content. Will work with element names or classnames. Section depth/nesting will be done in the order they're listed in the config block, rather than HTML element structure to give you more freedom over your architecture.
 
