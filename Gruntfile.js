@@ -23,7 +23,7 @@ module.exports = function(grunt) {
           'src/calculator.js',
           'src/painter.js',
           'src/scroller.js',
-          'lib/scrolling-0.1.0/scrolling.js',
+          'lib/scrolling/dist/scrolling.js',
           'src/main.js',
         ],
         dest: 'dist/<%= pkg.name %>.full.js'

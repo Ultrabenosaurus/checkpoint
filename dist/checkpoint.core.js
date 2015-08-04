@@ -1,4 +1,4 @@
-/*! checkpoint - v0.1.2 - 2015-08-03
+/*! checkpoint - v0.1.2 - 2015-08-04
 * https://github.com/Ultrabenosaurus/checkpoint
 * Copyright (c) 2015 Dan Bennett; Licensed BSD-3-Clause */
 function chSizer( conf ) {
