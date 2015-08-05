@@ -130,7 +130,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
+  grunt.registerTask('default', ['jshint', 'simplemocha', 'concat', 'uglify']);
 
   grunt.registerTask('test', ['jshint', 'simplemocha']);
   grunt.registerTask('jshint', ['jshint']);
