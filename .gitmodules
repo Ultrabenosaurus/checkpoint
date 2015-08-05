@@ -1,3 +1,3 @@
 [submodule "lib/scrolling"]
 	path = lib/scrolling
-	url = git@github.com:pazguille/scrolling.git
+	url = https://github.com/pazguille/scrolling.git
