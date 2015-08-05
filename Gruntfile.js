@@ -24,7 +24,7 @@ module.exports = function(grunt) {
           'src/painter.js',
           'src/scroller.js',
           'lib/scrolling/dist/scrolling.js',
-          'src/main.js',
+          'src/main.js'
         ],
         dest: 'dist/<%= pkg.name %>.full.js'
       },
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
           'src/finder.js',
           'src/calculator.js',
           'src/painter.js',
-          'src/main.js',
+          'src/main.js'
         ],
         dest: 'dist/<%= pkg.name %>.core.js'
       }
@@ -75,7 +75,37 @@ module.exports = function(grunt) {
       },
       lib_test: {
         src: ['lib/**/*.js', 'test/**/*.js']
+      },
+      full: {
+        src: [
+          'src/sizer.js',
+          'src/finder.js',
+          'src/calculator.js',
+          'src/painter.js',
+          'src/scroller.js',
+          'lib/scrolling/dist/scrolling.js',
+          'src/main.js'
+        ]
+      },
+      core: {
+        src: [
+          'src/sizer.js',
+          'src/finder.js',
+          'src/calculator.js',
+          'src/painter.js',
+          'src/main.js'
+        ]
       }
+    },
+    simplemocha: {
+      options: {
+        globals: ['expect'],
+        timeout: 3000,
+        ignoreLeaks: false,
+        ui: 'bdd',
+        reporter: 'tap'
+      },
+      all: { src: ['tests/*.js'] }
     },
     qunit: {
       files: ['test/**/*.html']
@@ -102,7 +132,9 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
 
-  grunt.registerTask('test', ['jshint', 'qunit']);
+  grunt.registerTask('test', ['jshint', 'simplemocha']);
+  grunt.registerTask('jshint', ['jshint']);
+  grunt.registerTask('simplemocha', ['simplemocha']);
 
   grunt.registerTask('build', ['concat', 'uglify']);
   grunt.registerTask('build-core', ['concat:core', 'uglify:core']);
