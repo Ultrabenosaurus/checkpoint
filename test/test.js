@@ -1,7 +1,7 @@
 var assert = require("assert");
 var webdriver = require("selenium-webdriver");
 
-describe("testing 'demo-core.html' in the browser", function() {
+describe("testing 'core' in the browser", function() {
   beforeEach(function() {
     if (process.env.SAUCE_USERNAME != undefined) {
       this.browser = new webdriver.Builder()
@@ -28,10 +28,10 @@ describe("testing 'demo-core.html' in the browser", function() {
   });
 
   it("should handle clicking on a marker", function(done) {
-    var marker = this.browser.findElement(webdriver.By.css('.chMarker'))[0];
+    var marker = this.browser.findElement(webdriver.By.className('chMarker'));
 
-    marker.click();
+    console.log( marker );
 
-    assert.notEqual(document.body.scrollTop, 0);
+    assert.notEqual(typeof checkpoint, "undefined");
   });
 });
